@@ -1,6 +1,6 @@
-// DONE: Wrap the entire contents of this file in an IIFE.
+// TODO: Wrap the entire contents of this file in an IIFE.
 // Pass in to the IIFE a module, upon which objects can be attached for later access.
-(function(module) {
+// (function(module) {
   function Article (opts) {
     this.author = opts.author;
     this.authorUrl = opts.authorUrl;
@@ -41,22 +41,22 @@
   // This function will retrieve the data from either a local or remote source,
   // and process it, then hand off control to the View.
 
-  // TODO: Refactor this function, and provide it with a parameter of a callback function
+  // DONE: Refactor this function, and provide it with a parameter of a callback function
   //(for now just a placeholder, but to be referenced at call time as a view function)
   // to execute once the loading of articles is done. We do this because we might want
   // to call other view functions, and not just the initIndexPage() that we are replacing.
   // Now, instead of calling articleView.initIndexPage(), we can simply run our callback.
-  Article.fetchAll = function() {
-    // if (localStorage.rawData) {
-    //   Article.loadAll(JSON.parse(localStorage.rawData));
-    //   articleView.initIndexPage();
-    // } else {
-    //   $.getJSON('/data/hackerIpsum.json', function(rawData) {
-    //     Article.loadAll(rawData);
-    //     localStorage.rawData = JSON.stringify(rawData); // Cache the json, so we don't need to request it next time.
-    //     articleView.initIndexPage();
-    //   });
-    // }
+  Article.fetchAll = function(a) {
+    if (localStorage.rawData) {
+      Article.loadAll(JSON.parse(localStorage.rawData));
+      a();
+    } else {
+      $.getJSON('/data/hackerIpsum.json', function(rawData) {
+        Article.loadAll(rawData);
+        localStorage.rawData = JSON.stringify(rawData); // Cache the json, so we don't need to request it next time.
+        a();
+      });
+    }
   };
 
   // TODO: Chain together a `map` and a `reduce` call to get a rough count of all words in all articles.
@@ -90,4 +90,4 @@
       };
     });
   };
-})();
+// })(window);
