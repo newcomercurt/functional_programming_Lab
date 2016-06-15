@@ -113,7 +113,7 @@
   };
 
   articleView.initAdminPage = function() {
-    // TODO: Call the Handlebars `.compile` function, which will return a function for you to use where needed.
+    // DONE: Call the Handlebars `.compile` function, which will return a function for you to use where needed.
     var newTemplate = $('#author-template').html();
     var template = Handlebars.compile(newTemplate);
 
