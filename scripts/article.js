@@ -1,6 +1,6 @@
 // TODO: Wrap the entire contents of this file in an IIFE.
 // Pass in to the IIFE a module, upon which objects can be attached for later access.
-// (function(module) {
+(function(module) {
   function Article (opts) {
     this.author = opts.author;
     this.authorUrl = opts.authorUrl;
@@ -46,15 +46,15 @@
   // to execute once the loading of articles is done. We do this because we might want
   // to call other view functions, and not just the initIndexPage() that we are replacing.
   // Now, instead of calling articleView.initIndexPage(), we can simply run our callback.
-  Article.fetchAll = function(a) {
+  Article.fetchAll = function(callback) {
     if (localStorage.rawData) {
       Article.loadAll(JSON.parse(localStorage.rawData));
-      a();
+      callback();
     } else {
       $.getJSON('/data/hackerIpsum.json', function(rawData) {
         Article.loadAll(rawData);
         localStorage.rawData = JSON.stringify(rawData); // Cache the json, so we don't need to request it next time.
-        a();
+        callback();
       });
     }
   };
@@ -69,7 +69,7 @@
       });
   };
 
-  // TODO: Chain together a `map` and a `reduce` call to produce an array of unique author names.
+  // Done: Chain together a `map` and a `reduce` call to produce an array of unique author names.
   Article.allAuthors = function() {
     // Read docs on .map and .reduce! You can reference the previous
     // `map` in the numWordsAll method to get started here.
@@ -82,7 +82,6 @@
     },[]);
     // For our `reduce` -- since we are trying to return an array, we'll need to specify an accumulator type...
     // what data type should this accumulator be and where is it placed?
-    return whatShouldIReturn;
   };
 
   Article.numWordsByAuthor = function() {
@@ -91,9 +90,10 @@
     // written by the specified author.
     return Article.allAuthors().map(function(author) {
       return {
-        // name:
+        name:author,
         // numWords: someCollection.someArrayMethod().map(...).reduce(...), ...
       };
     });
   };
-// })(window);
+  module.Article = Article;
+})(window);
