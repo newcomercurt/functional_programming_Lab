@@ -69,7 +69,7 @@
       });
   };
 
-  // TODO: Chain together a `map` and a `reduce` call to produce an array of unique author names.
+  // DONE: Chain together a `map` and a `reduce` call to produce an array of unique author names.
   Article.allAuthors = function() {
     // Read docs on .map and .reduce! You can reference the previous
     // `map` in the numWordsAll method to get started here.
